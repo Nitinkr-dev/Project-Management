@@ -4,50 +4,68 @@ import { useState } from 'react'
 import { Plus, Filter, MoreHorizontal, ChevronDown } from 'lucide-react'
 import clsx from 'clsx'
 
+type Task = {
+  id: string;
+  title: string;
+  tag: string;
+  priority: string;
+  assignee: string;
+  date: string;
+  done?: boolean;
+};
+
+const todoTasks: Task[] = [
+  { id: 't1', title: 'Create wireframes for homepage', tag: 'UI/UX', priority: 'High', assignee: 'E', date: 'Jun 03, 2025' },
+  { id: 't2', title: 'Setup development environment', tag: 'DevOps', priority: 'Medium', assignee: 'D', date: 'Jun 05, 2025' },
+  { id: 't3', title: 'Research competitors and trends', tag: 'Research', priority: 'Low', assignee: 'L', date: 'Jun 07, 2025' },
+  { id: 't4', title: 'Write content for landing page', tag: 'Content', priority: 'Medium', assignee: 'M', date: 'Jun 08, 2025' },
+];
+
+const inprogressTasks: Task[] = [
+  { id: 'p1', title: 'Design homepage mockup', tag: 'UI/UX', priority: 'High', assignee: 'S', date: 'May 30, 2025' },
+  { id: 'p2', title: 'Implement responsive navigation', tag: 'Frontend', priority: 'High', assignee: 'J', date: 'Jun 02, 2025' },
+  { id: 'p3', title: 'Setup API authentication', tag: 'Backend', priority: 'Medium', assignee: 'D', date: 'Jun 04, 2025' },
+  { id: 'p4', title: 'Create database schema', tag: 'Backend', priority: 'Medium', assignee: 'M', date: 'Jun 06, 2025' },
+];
+
+const testingTasks: Task[] = [
+  { id: 'q1', title: 'Test user registration flow', tag: 'QA', priority: 'High', assignee: 'L', date: 'May 31, 2025' },
+  { id: 'q2', title: 'Cross-browser compatibility test', tag: 'QA', priority: 'Medium', assignee: 'J', date: 'Jun 03, 2025' },
+  { id: 'q3', title: 'Check responsive design issues', tag: 'QA', priority: 'Low', assignee: 'E', date: 'Jun 05, 2025' },
+  { id: 'q4', title: 'Performance testing', tag: 'QA', priority: 'Medium', assignee: 'D', date: 'Jun 07, 2025' },
+];
+
+const completedTasks: Task[] = [
+  { id: 'c1', title: 'Project kickoff meeting', tag: 'Planning', priority: 'Low', assignee: 'S', date: 'May 20, 2025', done: true },
+  { id: 'c2', title: 'Define project requirements', tag: 'Planning', priority: 'Medium', assignee: 'M', date: 'May 21, 2025', done: true },
+  { id: 'c3', title: 'Create project timeline', tag: 'Planning', priority: 'Low', assignee: 'L', date: 'May 22, 2025', done: true },
+  { id: 'c4', title: 'Setup project repository', tag: 'DevOps', priority: 'Low', assignee: 'J', date: 'May 23, 2025', done: true },
+];
+
 const initialColumns = {
   todo: {
     title: 'To Do',
     color: 'bg-slate-100',
     count: 6,
-    tasks: [
-      { id: 't1', title: 'Create wireframes for homepage', tag: 'UI/UX', priority: 'High', assignee: 'E', date: 'Jun 03, 2025' },
-      { id: 't2', title: 'Setup development environment', tag: 'DevOps', priority: 'Medium', assignee: 'D', date: 'Jun 05, 2025' },
-      { id: 't3', title: 'Research competitors and trends', tag: 'Research', priority: 'Low', assignee: 'L', date: 'Jun 07, 2025' },
-      { id: 't4', title: 'Write content for landing page', tag: 'Content', priority: 'Medium', assignee: 'M', date: 'Jun 08, 2025' },
-    ]
+    tasks: todoTasks
   },
   inprogress: {
     title: 'In Progress',
     color: 'bg-blue-50',
     count: 5,
-    tasks: [
-      { id: 'p1', title: 'Design homepage mockup', tag: 'UI/UX', priority: 'High', assignee: 'S', date: 'May 30, 2025' },
-      { id: 'p2', title: 'Implement responsive navigation', tag: 'Frontend', priority: 'High', assignee: 'J', date: 'Jun 02, 2025' },
-      { id: 'p3', title: 'Setup API authentication', tag: 'Backend', priority: 'Medium', assignee: 'D', date: 'Jun 04, 2025' },
-      { id: 'p4', title: 'Create database schema', tag: 'Backend', priority: 'Medium', assignee: 'M', date: 'Jun 06, 2025' },
-    ]
+    tasks: inprogressTasks
   },
   testing: {
     title: 'Testing',
     color: 'bg-orange-50',
     count: 4,
-    tasks: [
-      { id: 'q1', title: 'Test user registration flow', tag: 'QA', priority: 'High', assignee: 'L', date: 'May 31, 2025' },
-      { id: 'q2', title: 'Cross-browser compatibility test', tag: 'QA', priority: 'Medium', assignee: 'J', date: 'Jun 03, 2025' },
-      { id: 'q3', title: 'Check responsive design issues', tag: 'QA', priority: 'Low', assignee: 'E', date: 'Jun 05, 2025' },
-      { id: 'q4', title: 'Performance testing', tag: 'QA', priority: 'Medium', assignee: 'D', date: 'Jun 07, 2025' },
-    ]
+    tasks: testingTasks
   },
   completed: {
     title: 'Completed',
     color: 'bg-green-50',
     count: 7,
-    tasks: [
-      { id: 'c1', title: 'Project kickoff meeting', tag: 'Planning', priority: 'Low', assignee: 'S', date: 'May 20, 2025', done: true },
-      { id: 'c2', title: 'Define project requirements', tag: 'Planning', priority: 'Medium', assignee: 'M', date: 'May 21, 2025', done: true },
-      { id: 'c3', title: 'Create project timeline', tag: 'Planning', priority: 'Low', assignee: 'L', date: 'May 22, 2025', done: true },
-      { id: 'c4', title: 'Setup project repository', tag: 'DevOps', priority: 'Low', assignee: 'J', date: 'May 23, 2025', done: true },
-    ]
+    tasks: completedTasks
   }
 }
 
@@ -68,7 +86,6 @@ const tagColors: Record<string, string> = {
   'Planning': 'bg-indigo-100 text-indigo-700',
 }
 
-type Task = { id: string; title: string; tag: string; priority: string; assignee: string; date: string; done?: boolean }
 type Columns = typeof initialColumns
 
 export default function TasksPage() {
@@ -151,7 +168,14 @@ export default function TasksPage() {
                       {task.priority === 'High' ? '+ High' : task.priority === 'Medium' ? '+ Medium' : '+ Low'}
                     </span>
                   </div>
-                  <p className={clsx('text-sm font-medium text-slate-800 mb-3 leading-snug', task.done && 'line-through text-slate-400')}>{task.title}</p>
+                  <p
+                    className={clsx(
+                      'text-sm font-medium text-slate-800 mb-3 leading-snug',
+                      task.done === true && 'line-through text-slate-400'
+                    )}
+                  >
+                    {task.title}
+                  </p>
                   <div className="flex items-center justify-between">
                     <div className="w-6 h-6 rounded-full bg-slate-300 flex items-center justify-center text-xs font-bold text-slate-600">{task.assignee}</div>
                     <div className="flex items-center gap-1 text-[11px] text-slate-400">
