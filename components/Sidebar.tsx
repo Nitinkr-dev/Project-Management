@@ -99,7 +99,7 @@ export default function Sidebar({ isOpen = false, setIsOpen }: SidebarProps) {
           <p className="text-xs font-semibold text-slate-700 mb-0.5">Need Help?</p>
           <p className="text-[10px] text-slate-500 mb-2">Our support team is here to help you.</p>
           <button 
-            onClick={() => router.push('/support')}
+            onClick={() => router.push('https://ticket-roan-alpha.vercel.app/')}
             className="w-full bg-blue-600 text-white text-xs py-1.5 rounded-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer"
           >
             Contact Support
