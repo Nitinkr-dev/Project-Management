@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Filter, MoreHorizontal, ChevronDown } from 'lucide-react'
+import { Plus, Filter, MoreHorizontal, ChevronDown, Calendar } from 'lucide-react'
 import clsx from 'clsx'
 
 type Task = {
@@ -111,27 +111,27 @@ export default function TasksPage() {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between shrink-0">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Task Board</h1>
           <p className="text-slate-500 text-sm mt-0.5">Manage and track your project tasks visually</p>
         </div>
-        <button className="btn-primary">
-          <Plus className="w-4 h-4" />
+        <button className="btn-primary" onClick={() => handleAddTask('todo')}>
+          <Plus className="w-4 h-4 shrink-0" />
           Add Task
         </button>
       </div>
 
       {/* Controls */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 shrink-0">
         <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm cursor-pointer hover:bg-slate-50">
           <div className="w-4 h-4 bg-blue-100 rounded text-blue-600 flex items-center justify-center text-[10px]">W</div>
-          <span className="font-medium text-slate-700">Website Redesign</span>
-          <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+          <span className="font-medium text-slate-700 shrink-0">Website Redesign</span>
+          <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0" />
         </div>
         <div className="flex-1" />
-        <button className="btn-secondary">
-          <Filter className="w-4 h-4" />
+        <button className="btn-secondary hidden sm:flex shrink-0" onClick={() => alert('Filters opened!')}>
+          <Filter className="w-4 h-4 shrink-0" />
           Filters
         </button>
         <div className="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden text-sm">
@@ -144,17 +144,17 @@ export default function TasksPage() {
       </div>
 
       {/* Kanban Board */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="flex gap-4 overflow-x-auto pb-2 snap-x flex-1 min-h-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {(Object.entries(columns) as [keyof Columns, typeof columns[keyof Columns]][]).map(([key, col]) => (
-          <div key={key} className="flex flex-col">
+          <div key={key} className="flex flex-col w-[280px] md:w-[320px] shrink-0 snap-start">
             {/* Column header */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <h3 className="font-semibold text-slate-800 text-sm">{col.title}</h3>
                 <span className="text-xs bg-slate-100 text-slate-500 rounded-full px-2 py-0.5 font-medium">{col.tasks.length}</span>
               </div>
-              <button className="text-slate-400 hover:text-slate-600">
-                <MoreHorizontal className="w-4 h-4" />
+              <button className="text-slate-400 hover:text-slate-600 shrink-0">
+                <MoreHorizontal className="w-4 h-4 shrink-0" />
               </button>
             </div>
 
@@ -170,16 +170,16 @@ export default function TasksPage() {
                   </div>
                   <p
                     className={clsx(
-                      'text-sm font-medium text-slate-800 mb-3 leading-snug',
-                      task.done === true && 'line-through text-slate-400'
+                      'text-sm font-medium mb-3 leading-snug',
+                      task.done === true ? 'line-through text-slate-400' : 'text-slate-800'
                     )}
                   >
                     {task.title}
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="w-6 h-6 rounded-full bg-slate-300 flex items-center justify-center text-xs font-bold text-slate-600">{task.assignee}</div>
-                    <div className="flex items-center gap-1 text-[11px] text-slate-400">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" strokeWidth="2"/><line x1="16" y1="2" x2="16" y2="6" strokeWidth="2"/><line x1="8" y1="2" x2="8" y2="6" strokeWidth="2"/><line x1="3" y1="10" x2="21" y2="10" strokeWidth="2"/></svg>
+                    <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium">
+                      <Calendar className="w-3.5 h-3.5 shrink-0" />
                       {task.date}
                     </div>
                   </div>
@@ -188,9 +188,9 @@ export default function TasksPage() {
 
               <button
                 onClick={() => handleAddTask(key)}
-                className="w-full py-2.5 text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center justify-center gap-1.5 hover:bg-white/60 rounded-lg transition-colors"
+                className="w-full py-2.5 text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center justify-center gap-1.5 hover:bg-white/60 rounded-lg transition-colors shrink-0"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-4 h-4 shrink-0" />
                 Add Task
               </button>
             </div>

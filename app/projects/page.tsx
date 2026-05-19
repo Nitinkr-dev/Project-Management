@@ -40,8 +40,8 @@ export default function ProjectsPage() {
           <h1 className="text-2xl font-bold text-slate-900">Projects</h1>
           <p className="text-slate-500 text-sm mt-0.5">Manage and monitor all your projects in one place</p>
         </div>
-        <button className="btn-primary">
-          <Plus className="w-4 h-4" />
+        <button className="btn-primary" onClick={() => alert('Create Project modal opened!')}>
+          <Plus className="w-4 h-4 shrink-0" />
           Create Project
         </button>
       </div>
@@ -50,12 +50,13 @@ export default function ProjectsPage() {
         {/* Filters */}
         <div className="flex items-center gap-3 p-4 border-b border-slate-100">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 shrink-0" />
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search projects..."
-              className="input-field pl-9"
+              style={{ paddingLeft: '2.5rem' }}
+              className="input-field"
             />
           </div>
           <select
@@ -70,15 +71,15 @@ export default function ProjectsPage() {
             <option>Planning</option>
             <option>Delayed</option>
           </select>
-          <button className="btn-secondary">
-            <Filter className="w-4 h-4" />
+          <button className="btn-secondary hidden sm:flex shrink-0" onClick={() => alert('Filters opened!')}>
+            <Filter className="w-4 h-4 shrink-0" />
             More Filters
           </button>
         </div>
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[800px]">
             <thead>
               <tr className="border-b border-slate-100">
                 <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-5 py-3">Project</th>
@@ -129,8 +130,8 @@ export default function ProjectsPage() {
                     </div>
                   </td>
                   <td className="px-3 py-3.5">
-                    <button className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-400">
-                      <MoreVertical className="w-4 h-4" />
+                    <button className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-400 shrink-0">
+                      <MoreVertical className="w-4 h-4 shrink-0" />
                     </button>
                   </td>
                 </tr>
@@ -143,16 +144,16 @@ export default function ProjectsPage() {
         <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100">
           <span className="text-xs text-slate-400">Showing 1 to {filtered.length} of 24 projects</span>
           <div className="flex items-center gap-1">
-            <button className="w-7 h-7 flex items-center justify-center rounded border border-slate-200 hover:bg-slate-50 text-slate-500">
-              <ChevronLeft className="w-3.5 h-3.5" />
+            <button className="w-7 h-7 flex items-center justify-center rounded border border-slate-200 hover:bg-slate-50 text-slate-500 shrink-0">
+              <ChevronLeft className="w-3.5 h-3.5 shrink-0" />
             </button>
             {[1, 2, 3].map(n => (
-              <button key={n} className={clsx('w-7 h-7 flex items-center justify-center rounded border text-xs font-medium', n === 1 ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-200 text-slate-600 hover:bg-slate-50')}>
+              <button key={n} className={clsx('w-7 h-7 flex items-center justify-center rounded border text-xs font-medium shrink-0', n === 1 ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-200 text-slate-600 hover:bg-slate-50')}>
                 {n}
               </button>
             ))}
-            <button className="w-7 h-7 flex items-center justify-center rounded border border-slate-200 hover:bg-slate-50 text-slate-500">
-              <ChevronRight className="w-3.5 h-3.5" />
+            <button className="w-7 h-7 flex items-center justify-center rounded border border-slate-200 hover:bg-slate-50 text-slate-500 shrink-0">
+              <ChevronRight className="w-3.5 h-3.5 shrink-0" />
             </button>
           </div>
         </div>

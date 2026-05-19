@@ -63,7 +63,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="admin@company.com"
-                className="input-field pl-10"
+                className="input-field !pl-10"
               />
             </div>
           </div>
@@ -79,7 +79,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="input-field pl-10 pr-10"
+                className="input-field !pl-10 !pr-10"
               />
               <button
                 type="button"
